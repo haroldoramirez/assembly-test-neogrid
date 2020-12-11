@@ -1,0 +1,19 @@
+1 - Cutting of steel sheets 30min
+2 - Austenpera (Heat treatment) 30min
+3 - Tempering sub-zero (Heat treatment) 45min
+4 - Safety sensor assembly 60min
+5 - Pieces washing 45min
+6 - Axis calibration 30min
+7 - Steel bearing assembly 60min
+8 - Assembly line cooling - maintenance
+9 - Nitriding process 45min
+10 - Injection subsystem assembly 60min
+11 - Compliance check 30min
+12 - Navigation subsystem assembly 60min
+13 - Torque converter subsystem calibration 60min
+14 - Left stabilizer bar alignment 30min
+15 - Setup of lock and control device 45min
+16 - Right stabilizer bar alignment 30min
+17 - Seal installation 45min
+18 - Application of decals 30min
+19 - Monitoring subsystem assembly 30min

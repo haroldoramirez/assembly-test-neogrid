@@ -1,4 +1,4 @@
-@(bReader: java.io.BufferedReader, linha: String, saidas: List[String])
+@(bReader: java.io.BufferedReader, linha: String, saidas: List[String], nomeArquivo: String)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 </head>
 <body>
-<h1>Output from input text</h1><br>
+<h1>Output from file "@nomeArquivo"</h1><br>
 @for(saida <- saidas) {
 @saida<br>
 }
