@@ -4,6 +4,7 @@ import play.libs.Files;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Results;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,6 +19,12 @@ import java.util.List;
  * to the application's home page.
  */
 public class HomeController extends Controller {
+
+
+    /**
+     * This result directly redirect to application home.
+     */
+    private Result GO_HOME = Results.redirect(routes.HomeController.index());
 
     /**
      * An action that renders an HTML page with a welcome message.
@@ -71,7 +78,7 @@ public class HomeController extends Controller {
 
             /**
              * Atividades
-             * 1 - Buscar uma forma de nao repetir a ultima tarefa no inicio da tarde - Verificar no laco while!
+             * 1 - Buscar uma forma de nao repetir a ultima tarefa no inicio da tarde - Verificar no laco while - utilizado readline - ok
              * 2 - Criar o output2 - ok
              * 3 - Equilibrar as tarefas do output 1 e output 2 para respeitar o horário de almoco e ginastica como?
              * 4 - Criar um verificador de horas das tarefas pra nao passar das 12:00hs(almoco) ou das 16:00(ginastica laboral), se passar do horário, enviar para o output2
@@ -168,7 +175,7 @@ public class HomeController extends Controller {
 
             return ok(views.html.resultado.render(bReader, "", saida, saida2, arquivo.getFilename()));
         } else {
-            return badRequest().flashing("error", "Missing file");
+            return GO_HOME.flashing("danger", "Missing file");
         }
 
     }

@@ -9,7 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 </head>
 <body>
-<h1>Output from file "@nomeArquivo"</h1><br>
+<h2>Output from file "@nomeArquivo"</h2><br>
 <p>Linha de montagem 1:</p>
 @for(saida <- saidas) {
 @saida<br>
@@ -20,6 +20,6 @@
 @saida2<br>
 }
 </br>
-<a style="text-color: #fff" href="@routes.HomeController.index()" type="button">voltar</a>
+<a href="@routes.HomeController.index()" type="button">voltar</a>
 </body>
 </html>
