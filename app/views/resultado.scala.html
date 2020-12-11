@@ -1,4 +1,4 @@
-@(bReader: java.io.BufferedReader, linha: String, saidas: List[String], nomeArquivo: String)
+@(bReader: java.io.BufferedReader, linha: String, saidas: List[String], saidas2: List[String], nomeArquivo: String)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +10,14 @@
 </head>
 <body>
 <h1>Output from file "@nomeArquivo"</h1><br>
+<p>Linha de montagem 1:</p>
 @for(saida <- saidas) {
 @saida<br>
+}
+<br>
+<p>Linha de montagem 2:</p>
+@for(saida2 <- saidas2) {
+@saida2<br>
 }
 </br>
 <a href="@routes.HomeController.index()" type="button">Retornar</a>

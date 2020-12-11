@@ -47,26 +47,38 @@ public class HomeController extends Controller {
         //Variaveis auxiliares
         String linha;
         LocalTime jornada = LocalTime.parse("09:00:00");
+        LocalTime jornada2 = LocalTime.parse("09:00:00");
         LocalTime almoco = LocalTime.parse("12:00:00");
         LocalTime ginastica = LocalTime.parse("16:00:00");
         DateTimeFormatter formatador = DateTimeFormatter.ISO_LOCAL_TIME;
 
         //Lista da linha de montagem - output
         List<String> saida = new ArrayList<>();
+        List<String> saida2 = new ArrayList<>();
 
         //Flags utilizadas
        boolean horarioAlmoco = false;
        boolean horarioGinastica = false;
+       boolean jornada1Concluida = false;
 
         //verificar se o arquivo nao esta nulo
         if (arquivo != null) {
 
             BufferedReader bReader = new BufferedReader(new FileReader(tempFile.path().toFile()));
 
+            /**
+             * Atividades
+             * 1 - Buscar uma forma de nao repetir a ultima tarefa no inicio da tarde - Verificar no laco while!
+             * 2 - Criar o output2
+             * 3 - Equilibrar as tarefas do output 1 e output 2 para respeitar o horário de almoco e ginastica como?
+             * 4 - Criar um verificador de horas das tarefas pra nao passar das 12:00hs(almoco) ou das 16:00(ginastica laboral), se passar do horário, enviar para o output2
+             */
             //Verificar se nao tem nenhuma linha vazia
             while ((linha = bReader.readLine()) != null) {
+
+                //Jornada 1 - Linha de montagem 1
                 if (jornada.isBefore(almoco)) {
-                    System.out.println("Precisa passar apenas da manha!");
+                    System.out.println("Jornada 1 - Precisa passar apenas da manha!");
                     saida.add(jornada.format(formatador) + " " + linha);
                     if (linha.contains("30min")) {
                         jornada = jornada.plusMinutes(30);
@@ -82,11 +94,11 @@ public class HomeController extends Controller {
                 if ((jornada.isAfter(almoco) || jornada.equals(almoco)) && !horarioAlmoco) {
                     horarioAlmoco = true;
                     saida.add(jornada.format(formatador) + " Almoço");
-                    System.out.println("Precisa passar apenas no Almoço!");
+                    System.out.println("Jornada 1 - Precisa passar apenas no Almoço!");
                     jornada = LocalTime.parse("13:00:00");
                 }
                 if (jornada.isBefore(ginastica) && horarioAlmoco) {
-                    System.out.println("Precisa passar apenas da tarde!");
+                    System.out.println("Jornada 1 - Precisa passar apenas da tarde!");
                     saida.add(jornada.format(formatador) + " " + linha);
                     if (linha.contains("30min")) {
                         jornada = jornada.plusMinutes(30);
@@ -102,17 +114,42 @@ public class HomeController extends Controller {
                 if ((jornada.isAfter(ginastica) || jornada.equals(ginastica)) && !horarioGinastica) {
                     horarioGinastica = true;
                     saida.add(jornada.format(formatador) + " Ginástica laboral");
-                    System.out.println("Precisa passar apenas na Ginástica!");
+                    System.out.println("Jornada 1 - Precisa passar apenas na Ginástica!");
+                    jornada1Concluida = true;
+                }
+
+                //Jornada 2 - Linha de montagem 2
+                if (jornada1Concluida) {
+                    System.out.println("--------------------------------------");
+                    System.out.println("Etapa 1 Concluida " + jornada1Concluida);
+                    if (jornada2.isBefore(almoco)) {
+                        System.out.println("Jornada 2 - Precisa passar apenas da manha!");
+                        saida2.add(jornada2.format(formatador) + " " + linha);
+                        if (linha.contains("30min")) {
+                            jornada2 = jornada2.plusMinutes(30);
+                        } else if (linha.contains("45min")) {
+                            jornada2 = jornada2.plusMinutes(45);
+                        } else if (linha.contains("60min")) {
+                            jornada2 = jornada2.plusMinutes(60);
+                        } else {
+                            //Manutencao adiciona apenas 5 minutos
+                            jornada2 = jornada2.plusMinutes(5);
+                        }
+                    }
+                    if ((jornada2.isAfter(almoco) || jornada2.equals(almoco)) && !horarioAlmoco) {
+                        horarioAlmoco = true;
+                        saida2.add(jornada2.format(formatador) + " Almoço");
+                        System.out.println("Jornada 2 - Precisa passar apenas no Almoço!");
+                        jornada2 = LocalTime.parse("13:00:00");
+                    }
                 }
             }
 
-            System.out.println("Fim da Jornada da manha " + jornada.format(formatador));
-            System.out.println("Almocando " + horarioAlmoco);
+            System.out.println("Jornada 1 - Fim da Jornada da manha " + jornada.format(formatador));
             System.out.println("--------------------------------------------------------");
-            //System.out.println("Jornada da Tarde " + jornadaTarde.format(formatador));
-            System.out.println("Ginastica " + horarioGinastica);
+            System.out.println("Jornada 2 - Fim da Jornada da manha  " + jornada2.format(formatador));
 
-            return ok(views.html.resultado.render(bReader, "", saida, arquivo.getFilename()));
+            return ok(views.html.resultado.render(bReader, "", saida, saida2, arquivo.getFilename()));
         } else {
             return badRequest().flashing("error", "Missing file");
         }
