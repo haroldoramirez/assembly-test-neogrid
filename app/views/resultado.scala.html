@@ -1,0 +1,19 @@
+@(bReader: java.io.BufferedReader, linha: String, saidas: List[String])
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @* Here's where we render the page title `String`. *@
+    <title>Problem Statement - Assembly Line - Haroldo</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+</head>
+<body>
+<h1>Output from input text</h1><br>
+@for(saida <- saidas) {
+@saida<br>
+}
+</br>
+<a href="@routes.HomeController.index()" type="button">Retornar</a>
+</body>
+</html>

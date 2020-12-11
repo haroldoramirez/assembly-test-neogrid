@@ -1,0 +1,14 @@
+@()
+
+@import helper._
+
+@main("Problem Statement - Assembly Line - Haroldo") {
+  <h1>Haroldo Ramirez - Assembly Line Test- Neogrid</h1>
+
+  @form(action = routes.HomeController.read(), Symbol("enctype") -> "multipart/form-data", 'id -> "readForm") {
+    <label>Test data (input.txt): </label>
+    <input name="file" type="file">
+    <input type="submit">
+  }
+
+}

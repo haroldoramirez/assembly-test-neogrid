@@ -1,0 +1,10 @@
+body {
+    background-color: #444;
+    color: #fff;
+    font-weight: 300;
+    font-size: 1.4em;
+    -moz-osx-font-smoothing: grayscale;
+    background: #16222A;
+    background: -webkit-linear-gradient(to left, #3A6073, #16222A);
+    background: linear-gradient(to left, #3A6073, #16222A);
+}

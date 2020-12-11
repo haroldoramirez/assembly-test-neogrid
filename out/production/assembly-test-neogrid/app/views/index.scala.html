@@ -1,0 +1,17 @@
+@()
+
+@import helper._
+
+@main("Problem Statement - Assembly Line") {
+  <h1>Assembly Line - Neogrid</h1>
+
+  @form(routes.HomeController.read(), 'id -> "readForm", 'enctype -> "multipart/form-data") {
+    <input name="file" type="file">
+    <button>Insert</button>
+  }
+
+  <div>
+    <p>Texto</p>
+  </div>
+
+}
